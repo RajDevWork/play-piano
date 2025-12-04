@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<title>Virtual Piano</title>
+<style>
+  body {
+    background: #222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    flex-direction: column;
+    position: relative;
+  }
+  .piano {
+    display: flex;
+  }
+  .key {
+    width: 60px;
+    height: 200px;
+    border: 1px solid #000;
+    background: white;
+    margin: 1px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    padding-bottom: 10px;
+    box-shadow: 0px 5px 0px #9f9f9f;
+    border-radius: 0px 0px 8px 8px;
+    cursor: pointer;
+  }
+  .key.black {
+    background: black;
+    width: 40px;
+    height: 130px;
+    margin-left: -20px;
+    margin-right: -20px;
+    z-index: 2;
+    position: relative;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+  }
+  .key:active{
+    scale: 0.95;
+  }
+  .music{
+    color: white;
+  font-size: 50px;
+  }
+  .music_symbol{
+   color: white;
+  height: 50px;
+  font-size: 100px;
+  position: absolute;
+  filter: brightness(4) saturate(0);
+  top: 20px;
+   opacity: 1;
+   transition: opacity 0.5s ease; /* Smooth fade */
+  }
+  h1{
+    color: white;
+    font-size: 75px;
+  }
+
+</style>
+
+</head>
+<body>
+<h1>Piano - Let's Play</h1>
+<div class="music_symbol">
+
+</div>
+<div class="piano">
+<!-- Octave 1 -->
+<div class="key" data-key="28">C</div>
+<div class="key black" data-key="29"><span data-key="29">C ♯</span><span data-key="29">D ♭</span></div>
+
+<div class="key" data-key="30">D</div>
+<div class="key black" data-key="31"><span data-key="31">D ♯</span><span data-key="31">E ♭</span></div>
+
+<div class="key" data-key="32">E</div>
+
+<div class="key" data-key="33">F</div>
+<div class="key black" data-key="34"><span data-key="34">F ♯</span><span data-key="34">G ♭</span></div>
+
+<div class="key" data-key="35">G</div>
+<div class="key black" data-key="36"><span data-key="36">G ♯</span><span data-key="36">A ♭</span></div>
+
+<div class="key" data-key="37">A</div>
+<div class="key black" data-key="38"><span data-key="38">A ♯</span><span data-key="38">B ♭</span></div>
+
+<div class="key" data-key="39">B</div>
+
+
+<!-- Octave 2 -->
+<div class="key" data-key="40">C</div>
+<div class="key black" data-key="41"><span data-key="41">C ♯</span><span data-key="41">D ♭</span></div>
+
+<div class="key" data-key="42">D</div>
+<div class="key black" data-key="43"><span data-key="43">D ♯</span><span data-key="43">E ♭</span></div>
+
+<div class="key" data-key="44">E</div>
+
+<div class="key" data-key="45">F</div>
+<div class="key black" data-key="46"><span data-key="46">F ♯</span><span data-key="46">G ♭</span></div>
+
+<div class="key" data-key="47">G</div>
+<div class="key black" data-key="48"><span data-key="48">G ♯</span><span data-key="48">A ♭</span></div>
+
+<div class="key" data-key="49">A</div>
+<div class="key black" data-key="50"><span data-key="50">A ♯</span><span data-key="50">B ♭</span></div>
+
+<div class="key" data-key="51">B</div>
+
+
+<!-- Octave 3 -->
+<div class="key" data-key="52">C</div>
+<div class="key black" data-key="53"><span data-key="53">C ♯</span><span data-key="53">D ♭</span></div>
+
+<div class="key" data-key="54">D</div>
+<div class="key black" data-key="55"><span data-key="55">D ♯</span><span data-key="55">E ♭</span></div>
+
+<div class="key" data-key="56">E</div>
+
+<div class="key" data-key="57">F</div>
+<div class="key black" data-key="58"><span data-key="58">F ♯</span><span data-key="58">G ♭</span></div>
+
+<div class="key" data-key="59">G</div>
+<div class="key black" data-key="60"><span data-key="60">G ♯</span><span data-key="60">A ♭</span></div>
+
+<div class="key" data-key="61">A</div>
+<div class="key black" data-key="62"><span data-key="62">A ♯</span><span data-key="62">B ♭</span></div>
+
+<div class="key" data-key="63">B</div>
+
+
+
+</div>
+
+<script>
+    let piano = document.querySelector(".piano");
+    let music_symbol = document.querySelector(".music_symbol");
+    const musicSymbols = ["🎵", "🎶", "♫", "♩", "♪", "♬", "♭", "♯", "𝄞", "𝄢"];
+    piano.addEventListener("click",function(elem){
+        let ransign = Math.floor(Math.random() * musicSymbols.length)
+        let elem_note = elem.target.dataset.key;
+        let music = "media/"+elem_note+".mp3";
+        music_symbol.style.opacity = 1;
+        let singChars = musicSymbols[ransign];
+         console.log(singChars)
+         music_symbol.textContent = singChars;
+         let timeOut = setTimeout(()=>{
+            music_symbol.style.opacity = 0;
+         },500)
+
+
+        let audio = new Audio(music);
+        audio.play();
+        // console.log("elem = ",elem.target.dataset.key);
+    })
+    
+</script>
+
+</body>
+</html>
